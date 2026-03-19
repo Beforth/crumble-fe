@@ -1,0 +1,17 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="48" stroke="#374151" stroke-width="4" fill="white"/>
+  <circle cx="50" cy="50" r="35" stroke="#374151" stroke-width="2" fill="white"/>
+  
+  <!-- Cupcake base -->
+  <path d="M35 45 L65 45 L62 70 L38 70 Z" stroke="#374151" stroke-width="2" fill="white"/>
+  <path d="M35 45 L40 45 L42 70 L38 70 Z" fill="white"/>
+  <path d="M45 45 L50 45 L52 70 L48 70 Z" fill="white"/>
+  <path d="M55 45 L60 45 L58 70 L54 70 Z" fill="white"/>
+  
+  <!-- Cupcake top -->
+  <path d="M32 45 C32 35, 42 30, 50 30 C58 30, 68 35, 68 45 C68 40, 62 38, 58 40 C56 35, 54 35, 50 38 C46 35, 44 35, 42 40 C38 38, 32 40, 32 45 Z" fill="#374151"/>
+  
+  <!-- Cherry -->
+  <circle cx="48" cy="32" r="2" fill="#374151"/>
+  <path d="M48 30 Q50 28, 52 30" stroke="#374151" stroke-width="1" fill="none"/>
+</svg>
