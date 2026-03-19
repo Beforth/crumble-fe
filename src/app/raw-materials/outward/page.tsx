@@ -13,12 +13,22 @@ import { ErrorModal } from '@/components/ui/ErrorModal';
 
 type LineItem = { raw_material_id: string; quantity: string };
 
+/** Row from GET /raw-materials (fields used in this form). */
+type RawMaterialOption = {
+  id: number;
+  name: string;
+  unit?: string;
+  current_stock?: number | string;
+};
+
+type OutletOption = { id: number; name: string };
+
 export default function OutwardEntryPage() {
   const router = useRouter();
   const { user } = useAuth();
   const { selectedOutlet } = useOutlet();
-  const [materials, setMaterials] = useState([]);
-  const [outlets, setOutlets] = useState([]);
+  const [materials, setMaterials] = useState<RawMaterialOption[]>([]);
+  const [outlets, setOutlets] = useState<OutletOption[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -63,7 +73,8 @@ export default function OutwardEntryPage() {
     }
   }, [selectedOutlet, user?.role]);
 
-  const getMaterial = (id: string) => materials.find((m: any) => m.id === parseInt(id));
+  const getMaterial = (id: string) =>
+    materials.find((m) => m.id === parseInt(id, 10));
   const isTransfer = Boolean(
     formData.outlet_id &&
     formData.to_outlet_id &&
@@ -95,8 +106,8 @@ export default function OutwardEntryPage() {
       return;
     }
     for (const line of validLines) {
-      const mat: any = getMaterial(line.raw_material_id);
-      const currentStock = mat ? parseFloat(mat.current_stock || 0) : 0;
+      const mat = getMaterial(line.raw_material_id);
+      const currentStock = mat ? parseFloat(String(mat.current_stock ?? 0)) : 0;
       const qty = parseFloat(line.quantity);
       if (currentStock <= 0) {
         setErrorTitle('Insufficient stock');
@@ -202,7 +213,7 @@ export default function OutwardEntryPage() {
                 className="w-full bg-surface-2 border border-border rounded-lg px-4 py-3 text-text-primary focus:border-primary focus:outline-none transition-colors appearance-none"
               >
                 <option value="">Select Source</option>
-                {outlets.map((o: any) => (
+                {outlets.map((o) => (
                   <option key={o.id} value={o.id}>
                     {o.name}
                   </option>
@@ -224,8 +235,8 @@ export default function OutwardEntryPage() {
               >
                 <option value="">Select Destination</option>
                 {outlets
-                  .filter((o: any) => o.id.toString() !== formData.outlet_id)
-                  .map((o: any) => (
+                  .filter((o) => o.id.toString() !== formData.outlet_id)
+                  .map((o) => (
                     <option key={o.id} value={o.id}>
                       {o.name}
                     </option>
@@ -241,7 +252,7 @@ export default function OutwardEntryPage() {
 
         <div className="space-y-3">
           {lines.map((line, idx) => {
-            const mat: any = getMaterial(line.raw_material_id);
+            const mat = getMaterial(line.raw_material_id);
             const currentStock = mat ? parseFloat(mat.current_stock || 0) : null;
             return (
               <div
@@ -258,7 +269,7 @@ export default function OutwardEntryPage() {
                     className="w-full bg-surface-2 border border-border rounded-lg px-4 py-3 text-text-primary focus:border-primary focus:outline-none transition-colors appearance-none"
                   >
                     <option value="">Select Material</option>
-                    {materials.map((m: any) => (
+                    {materials.map((m) => (
                       <option key={m.id} value={m.id}>
                         {m.name} — {formatQty(m.current_stock ?? 0, m.unit || '')}
                       </option>
