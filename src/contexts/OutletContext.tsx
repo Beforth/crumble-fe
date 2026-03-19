@@ -22,8 +22,9 @@ export const ALL_OUTLET: Outlet = {
   is_active: true,
 };
 
-export function isAllOutlet(o: Outlet | null): o is Outlet {
-  return o != null && (o.id === 0 || (o as Outlet).outlet_type === 'all');
+/** True when the sentinel "All outlets" row is selected (not a real outlet row). */
+export function isAllOutlet(o: Outlet | null): boolean {
+  return o != null && (o.id === 0 || o.outlet_type === 'all');
 }
 
 interface OutletContextType {
