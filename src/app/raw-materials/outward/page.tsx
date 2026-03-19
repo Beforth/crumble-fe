@@ -253,7 +253,7 @@ export default function OutwardEntryPage() {
         <div className="space-y-3">
           {lines.map((line, idx) => {
             const mat = getMaterial(line.raw_material_id);
-            const currentStock = mat ? parseFloat(mat.current_stock || 0) : null;
+            const currentStock = mat ? parseFloat(String(mat.current_stock ?? 0)) : null;
             return (
               <div
                 key={idx}
